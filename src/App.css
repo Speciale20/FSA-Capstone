@@ -64,3 +64,85 @@ button {
 }
 
 /* Footer Ends */
+/* Home page begins */
+.banner-details {
+  background: url(./images/home-page.jpg);
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+}
+
+.banner {
+  position: relative;
+  text-align: center;
+
+}
+
+.welcome-text {
+  position: absolute;
+  top: 200px;
+  left: 16px;
+  color: #EBE7D9;
+}
+
+.welcome-text1 {
+  position: absolute;
+  top: 300px;
+  left: 16px;
+  color: #EBE7D9;
+
+}
+
+.welcome-text2 {
+  position: absolute;
+  top: 400px;
+  left: 16px;
+  color: #EBE7D9;
+}
+
+/* Shop now button start*/
+.Shop-Now-btn {
+  position: absolute;
+  top: 600px;
+  left: 30rem;
+  width: 50%;
+
+  --c: #EBE7D9;
+  /* text color */
+  background: linear-gradient(90deg, #0F222D 33%, #fff5, #0F222D 67%) var(--_p, 100%)/300% no-repeat,
+    #F55139;
+  /* background color */
+  color: #0000;
+  border: none;
+  transform: perspective(500px) rotateY(calc(20deg*var(--_i, -1)));
+  text-shadow: calc(var(--_i, -1)* 0.08em) -.01em 0 var(--c),
+    calc(var(--_i, -1)*-0.08em) .01em 2px #0F222D;
+  outline-offset: .1em;
+  transition: 0.3s;
+}
+
+.Shop-Now-btn:hover,
+.Shop-Now-btn:focus-visible {
+  --_p: 0%;
+  --_i: 1;
+}
+
+.Shop-Now-btn:active {
+  text-shadow: none;
+  color: var(--c);
+  box-shadow: inset 0 0 9e9q #0005;
+  transition: 0s;
+}
+
+.Shop-Now-btn {
+  font-weight: bold;
+  font-size: 2rem;
+  margin: 0;
+  cursor: pointer;
+  padding: .1em .3em;
+}
+
+/* shop now button finish */
+
+/* Home page ends */
