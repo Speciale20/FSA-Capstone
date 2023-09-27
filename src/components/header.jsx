@@ -9,43 +9,45 @@ const header = () => {
   return (
     <>
       <div>
-        <header>
-          <div className="container">
-            <div>
-              <Link to="/">
-                {" "}
-                <img src={logo} alt="" className="Logo" />
+        <center>
+          <header>
+            <div className="container">
+              <div>
+                <Link to="/">
+                  {" "}
+                  <img src={logo} alt="" className="Logo" />
+                </Link>
+              </div>
+              <div className="Link">
+                <Link to={"/"}>HOME</Link>
+              </div>
+              <div className="Link">
+                <Link to={"/shop"}>SHOP</Link>
+              </div>
+              <div className="Link">
+                <Link to={"/about"}>ABOUT</Link>
+              </div>
+              <form className="d-flex" role="search" />
+              <input
+                className="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <button className="btn btn-outline-success" type="submit">
+                Search
+              </button>
+              <Link to={"/Login"}>
+                <RiAccountCircleFill />
+                <span>ACCOUNT</span>
+              </Link>
+              <Link to={"/Cart"}>
+                <BsFillCartFill />
+                <span>CART</span>
               </Link>
             </div>
-            <div className="Link">
-              <Link to={"/"}>HOME</Link>
-            </div>
-            <div className="Link">
-              <Link to={"/shop"}>SHOP</Link>
-            </div>
-            <div className="Link">
-              <Link to={"/about"}>ABOUT</Link>
-            </div>
-            <form className="d-flex" role="search" />
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Search
-            </button>
-            <Link to={"/Login"}>
-              <RiAccountCircleFill />
-              <span>ACCOUNT</span>
-            </Link>
-            <Link to={"/Cart"}>
-              <BsFillCartFill />
-              <span>CART</span>
-            </Link>
-          </div>
-        </header>
+          </header>
+        </center>
       </div>
     </>
   );

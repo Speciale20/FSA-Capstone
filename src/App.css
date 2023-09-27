@@ -6,7 +6,7 @@
 
 .container {
   margin: 0rem;
-  background-color: red;
+  /* background-color: red; */
   display: flex;
   align-items: center;
   align-items: baseline;
@@ -84,6 +84,7 @@ button {
   top: 200px;
   left: 16px;
   color: #EBE7D9;
+  font-size: 5rem;
 }
 
 .welcome-text1 {
@@ -91,6 +92,8 @@ button {
   top: 300px;
   left: 16px;
   color: #EBE7D9;
+  font-size: 2.5rem;
+
 
 }
 
@@ -99,6 +102,7 @@ button {
   top: 400px;
   left: 16px;
   color: #EBE7D9;
+  font-size: 2rem;
 }
 
 /* Shop now button start*/
@@ -146,3 +150,46 @@ button {
 /* shop now button finish */
 
 /* Home page ends */
+/* Shop page begins */
+.container-shop {
+  background-color: #0F222D;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+
+}
+
+.box {
+  background-color: #F55139;
+  width: 28%;
+  margin: 10px;
+  padding: 20px;
+  box-shadow: 2px 2px 10px #EBE7D9;
+
+}
+
+.item-title {
+  color: #EBE7D9;
+  text-align: center;
+}
+
+.item-description {
+  color: #0F222D;
+  font-size: 1rem;
+}
+
+.item-price {
+  color: #0F222D;
+  font-size: 1rem;
+}
+
+.item-images {
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+}
+
+
+/* Shop page ends */
