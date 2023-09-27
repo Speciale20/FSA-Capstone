@@ -191,5 +191,22 @@ button {
   object-fit: contain;
 }
 
+/* Category buttons */
+.col-cat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+}
+
+.btn-cat {
+  background-color: #F55139;
+  margin: 2px 2px;
+  width: 70%;
+
+}
+
+/* Category buttons */
 
 /* Shop page ends */
