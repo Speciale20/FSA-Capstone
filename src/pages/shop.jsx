@@ -2,119 +2,103 @@ import { useEffect } from "react";
 import { useState } from "react";
 import React from "react";
 import { json } from "react-router-dom";
+import "../App.css";
+import axios from "axios";
+import Cart from "./cart";
 
 const shop = () => {
-  // const [category, setCategory] = useState("");
-  // const fetchProducts = (category) => {
-  //   fetch(`https://fakestoreapi.com/products/category/${category}`)
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         return response.json();
-  //       } else {
-  //         throw new Error("Failed to fetch products.");
-  //       }
-  //     })
-  //     .then((data) => {
-  //       setProducts(data);
-  //     })
-  //     .catch((error) => {
-  //       console.log([error.message]);
-  //     });
-  // };
+  const [search, setSearch] = useState("");
+  const [data, setData] = useState([]);
+  const [cart, setCart] = useState([]);
 
-  // useEffect(() => {
-  //   if (category === "") {
-  //     fetch("https://fakestoreapi.com/products")
-  //       .then((response) => {
-  //         if (response.ok) {
-  //           return response.json();
-  //         } else {
-  //           throw new Error("Failed to fetch products.");
-  //         }
-  //       })
-  //       .then((data) => {
-  //         setProducts(data);
-  //       })
-  //       .catch((error) => {
-  //         console.log([error.message]);
-  //       });
-  //   } else {
-  //     fetchProducts(category);
-  //   }
-  // }, [category]);
+  console.log("Cart in Shop:", cart);
 
-  // fetch all products
+  const handleAddToCart = (item) => {
+    console.log("Adding item to cart:", item);
+    // Update the cart state by adding the item
+    setCart([...cart, item]);
+  };
 
-  const [fake, setFake] = useState([]);
-
-  // console.log(fake);
   useEffect(() => {
-    const fakeStore = async () => {
-      const response = await fetch("https://fakestoreapi.com/products");
-      // console.log(response);
-      const jsonData = await response.json();
-      console.log(jsonData);
-      setFake(jsonData);
-    };
-    fakeStore();
+    axios
+      .get("https://fakestoreapi.com/products")
+      .then((response) => {
+        console.log("API data:", response.data);
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.log("API error:", error);
+      });
   }, []);
-  const [menCategory, setMenCategory] = useState([]);
-  const menCat = () =>
-    useEffect(() => {
-      const mensCategory = async () => {
-        const response = await fetch(
-          "https://fakestoreapi.com/products/category/men's%20clothing"
-        );
-        const jsonData = await response.json();
-        console.log(jsonData);
-        setMenCategory(jsonData);
-
-        // .then((res) => res.json())
-        // .then((json) => console.log(json));
-      };
-      mensCategory();
-    }, []);
 
   return (
-    <>
-      <>
-        <div className="container-cat">
-          <div className="row-cat">
-            <div className="col-cat">
-              <button className="btn-cat">{menCat}Men's</button>
-            </div>
-            <div className="col-cat">
-              <button className="btn-cat ">Women's</button>
-            </div>
-            <div className="col-cat">
-              <button className="btn-cat ">Jewelery</button>
-            </div>
-            <div className="col-cat">
-              <button className="btn-cat ">Electronics</button>
-            </div>
-            <div className="col-cat">
-              <button className="btn-cat ">All Products</button>
-            </div>
+    <div>
+      <center>
+        <div className="container-search">
+          <input
+            type="search"
+            name="src"
+            placeholder="search products here"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
+        </div>
+      </center>
+      <div className="container-cat">
+        <div className="row-cat">
+          <div className="col-cat">
+            <button className="btn-cat">Men's</button>
+          </div>
+          <div className="col-cat">
+            <button className="btn-cat ">Women's</button>
+          </div>
+          <div className="col-cat">
+            <button className="btn-cat ">Jewelery</button>
+          </div>
+          <div className="col-cat">
+            <button className="btn-cat ">Electronics</button>
+          </div>
+          <div className="col-cat">
+            <button className="btn-cat ">All Products</button>
           </div>
         </div>
-      </>
-      <div className="container-shop">
-        {fake.map((values) => {
-          return (
-            <>
-              <div className="box">
-                <div className="content">
-                  <h5 className="item-title">{values.title}</h5>
-                  <p className="item-description">{values.description}</p>
-                  <p className="item-price">{values.price}</p>
-                </div>
-                <img className="item-images" src={values.image} alt="" />
-              </div>
-            </>
-          );
-        })}
       </div>
-    </>
+      <div className="container-shop">
+        {data
+          .filter((row) => {
+            if (search === "") {
+              return row;
+            } else if (row.title.toLowerCase().includes(search.toLowerCase())) {
+              return row;
+            }
+            return null;
+          })
+          .map((row, i) => (
+            <div className="box" key={i}>
+              <div className="content">
+                <div className="item-title">
+                  <h5 className="item-title">{row.title.substring(0, 20)}</h5>
+                  <p className="item-description">{row.description}</p>
+                  <p className="item-price">{row.price}</p>
+                </div>
+                <div>
+                  <img
+                    className="item-images"
+                    src={row.image}
+                    alt={row.image}
+                  />
+                  <button onClick={() => handleAddToCart(row)}>
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+      </div>
+      <Cart cart={cart} />
+    </div>
   );
 };
 

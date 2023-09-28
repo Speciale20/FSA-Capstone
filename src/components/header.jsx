@@ -1,11 +1,30 @@
 import React from "react";
 import "../App.css";
-import { Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+} from "react-router-dom";
 import logo from "../images/Shamazon-Logo.jpg";
 import { BsFillCartFill } from "react-icons/bs";
-import { RiAccountCircleFill } from "react-icons/ri";
+import { HiOutlineLogout } from "react-icons/hi";
 
-const header = () => {
+const removeToken = () => {
+  localStorage.removeItem("userToken");
+};
+
+const header = ({ setToken }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    console.log("logging out...");
+    // Call a function to remove the token
+    removeToken();
+    // Redirect to the home page after logout
+    navigate("/");
+  };
   return (
     <>
       <div>
@@ -27,19 +46,9 @@ const header = () => {
               <div className="Link">
                 <Link to={"/about"}>ABOUT</Link>
               </div>
-              <form className="d-flex" role="search" />
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                Search
-              </button>
-              <Link to={"/Login"}>
-                <RiAccountCircleFill />
-                <span>ACCOUNT</span>
+              <Link onClick={handleLogout}>
+                <HiOutlineLogout />
+                <span>Log Out</span>
               </Link>
               <Link to={"/Cart"}>
                 <BsFillCartFill />
