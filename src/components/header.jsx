@@ -50,7 +50,7 @@ const header = ({ setToken }) => {
                 <HiOutlineLogout />
                 <span>Log Out</span>
               </Link>
-              <Link to={"/Cart"}>
+              <Link to={"/cart"}>
                 <BsFillCartFill />
                 <span>CART</span>
               </Link>

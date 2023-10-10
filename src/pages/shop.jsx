@@ -1,35 +1,73 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import React from "react";
-import { json } from "react-router-dom";
-import "../App.css";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
+import ProductDetail from "./ProductDetail";
 import Cart from "./cart";
 
-const shop = () => {
+const Shop = () => {
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
   const [cart, setCart] = useState([]);
-
-  console.log("Cart in Shop:", cart);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [sortingOption, setSortingOption] = useState("desc");
 
   const handleAddToCart = (item) => {
-    console.log("Adding item to cart:", item);
-    // Update the cart state by adding the item
-    setCart([...cart, item]);
+    // Check if the item is already in the cart
+    const existingItem = cart.find((cartItem) => cartItem.id === item.id);
+
+    if (existingItem) {
+      // If the item is already in the cart, update its quantity
+      const updatedCart = cart.map((cartItem) => {
+        if (cartItem.id === item.id) {
+          return { ...cartItem, quantity: cartItem.quantity + 1 };
+        }
+        return cartItem;
+      });
+      setCart(updatedCart);
+    } else {
+      // If the item is not in the cart, add it with quantity 1
+      const cartItem = {
+        id: item.id,
+        title: item.title,
+        img: item.image,
+        price: item.price,
+        quantity: 1, // Initial quantity
+      };
+      setCart([...cart, cartItem]);
+    }
+  };
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+  };
+
+  const handleSortingChange = (e) => {
+    setSortingOption(e.target.value);
   };
 
   useEffect(() => {
-    axios
-      .get("https://fakestoreapi.com/products")
-      .then((response) => {
-        console.log("API data:", response.data);
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.log("API error:", error);
-      });
-  }, []);
+    if (selectedCategory) {
+      axios
+        .get(
+          `https://fakestoreapi.com/products/category/${selectedCategory}?sort=${sortingOption}`
+        )
+        .then((response) => {
+          setData(response.data);
+        })
+        .catch((error) => {
+          console.log("API error:", error);
+        });
+    } else {
+      axios
+        .get(`https://fakestoreapi.com/products?sort=${sortingOption}`)
+        .then((response) => {
+          setData(response.data);
+        })
+        .catch((error) => {
+          console.log("API error:", error);
+        });
+    }
+  }, [selectedCategory, sortingOption]);
 
   return (
     <div>
@@ -38,7 +76,7 @@ const shop = () => {
           <input
             type="search"
             name="src"
-            placeholder="search products here"
+            placeholder="Search products here"
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
@@ -46,25 +84,60 @@ const shop = () => {
           />
         </div>
       </center>
+
+      {/* Category buttons */}
       <div className="container-cat">
         <div className="row-cat">
-          <div className="col-cat">
-            <button className="btn-cat">Men's</button>
-          </div>
-          <div className="col-cat">
-            <button className="btn-cat ">Women's</button>
-          </div>
-          <div className="col-cat">
-            <button className="btn-cat ">Jewelery</button>
-          </div>
-          <div className="col-cat">
-            <button className="btn-cat ">Electronics</button>
-          </div>
-          <div className="col-cat">
-            <button className="btn-cat ">All Products</button>
-          </div>
+          <button
+            className={`btn-cat ${
+              selectedCategory === "men's clothing" ? "active" : ""
+            }`}
+            onClick={() => handleCategoryClick("men's clothing")}
+          >
+            Men's
+          </button>
+          <button
+            className={`btn-cat ${
+              selectedCategory === "women's clothing" ? "active" : ""
+            }`}
+            onClick={() => handleCategoryClick("women's clothing")}
+          >
+            Women's
+          </button>
+          <button
+            className={`btn-cat ${
+              selectedCategory === "jewelery" ? "active" : ""
+            }`}
+            onClick={() => handleCategoryClick("jewelery")}
+          >
+            Jewelry
+          </button>
+          <button
+            className={`btn-cat ${
+              selectedCategory === "electronics" ? "active" : ""
+            }`}
+            onClick={() => handleCategoryClick("electronics")}
+          >
+            Electronics
+          </button>
+          <button
+            className={`btn-cat ${selectedCategory === "" ? "active" : ""}`}
+            onClick={() => handleCategoryClick("")}
+          >
+            All Products
+          </button>
         </div>
       </div>
+
+      {/* Sorting dropdown */}
+      <div className="container-sort">
+        <select value={sortingOption} onChange={handleSortingChange}>
+          <option value="">Default</option>
+          <option value="desc">Sort by Price (High to Low)</option>
+          <option value="asc">Sort by Price (Low to High)</option>
+        </select>
+      </div>
+
       <div className="container-shop">
         {data
           .filter((row) => {
@@ -81,25 +154,50 @@ const shop = () => {
                 <div className="item-title">
                   <h5 className="item-title">{row.title.substring(0, 20)}</h5>
                   <p className="item-description">{row.description}</p>
-                  <p className="item-price">{row.price}</p>
+                  <p className="item-price">${row.price.toFixed(2)}</p>
                 </div>
                 <div>
-                  <img
-                    className="item-images"
-                    src={row.image}
-                    alt={row.image}
-                  />
-                  <button onClick={() => handleAddToCart(row)}>
-                    Add to Cart
-                  </button>
+                  <Link to={`/shop/products/${row.id}`}>
+                    <img
+                      className="item-images"
+                      src={row.image}
+                      alt={row.image}
+                    />
+                  </Link>
+                  <div>
+                    <button onClick={() => handleAddToCart(row)}>
+                      Add to Cart
+                    </button>
+                    {/* Display quantity and buttons */}
+                    {cart.map((cartItem) => {
+                      if (cartItem.id === row.id) {
+                        return (
+                          <div key={cartItem.id}>
+                            <button
+                              onClick={() => handleIncreaseQuantity(cartItem)}
+                            >
+                              +
+                            </button>
+                            <span>{cartItem.quantity}</span>
+                            <button
+                              onClick={() => handleDecreaseQuantity(cartItem)}
+                            >
+                              -
+                            </button>
+                          </div>
+                        );
+                      }
+                      return null;
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
           ))}
       </div>
-      <Cart cart={cart} />
+      <Link to="/cart">Go to Cart</Link>
     </div>
   );
 };
 
-export default shop;
+export default Shop;
