@@ -1,3 +1,10 @@
+// elimentate login req if there is not a token
+// login button on nav bar
+// make a conformation for purchase button and screen
+// remove +- on Shop on each card
+// update quanitiy of cart on the nav bar
+// Cleanup unsued code on each file
+
 import React, { useState, useEffect } from "react";
 import {
   BrowserRouter,
@@ -46,6 +53,34 @@ function AppRoutes() {
     console.log("After navigating");
   };
 
+  const handleIncreaseQuantity = (item) => {
+    // Find the item in the cart
+    const updatedCart = cart.map((cartItem) => {
+      if (cartItem.id === item.id) {
+        return { ...cartItem, quantity: cartItem.quantity + 1 };
+      }
+      return cartItem;
+    });
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  };
+
+  const handleDecreaseQuantity = (item) => {
+    // Find the item in the cart
+    const updatedCart = cart.map((cartItem) => {
+      if (cartItem.id === item.id) {
+        return { ...cartItem, quantity: cartItem.quantity - 1 };
+      }
+      return cartItem;
+    });
+
+    // Remove the item from the cart if quantity becomes 0
+    const filteredCart = updatedCart.filter(
+      (cartItem) => cartItem.quantity > 0
+    );
+    setCart(filteredCart);
+    localStorage.setItem("cart", JSON.stringify(filteredCart));
+  };
   return (
     <Routes>
       <Route path="/" element={<Layout handleLogout={handleLogout} />}>
@@ -57,7 +92,11 @@ function AppRoutes() {
           path="cart"
           element={
             token ? (
-              <Cart cart={cart} updateCart={setCart} />
+              <Cart
+                handleDecreaseQuantity={handleDecreaseQuantity}
+                handleIncreaseQuantity={handleIncreaseQuantity}
+                cart={cart}
+              />
             ) : (
               <Navigate to="/login" />
             )

@@ -4,13 +4,13 @@ import axios from "axios";
 import ProductDetail from "./ProductDetail";
 import Cart from "./cart";
 
-const Shop = () => {
+const Shop = ({ cart, setCart }) => {
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
-  const [cart, setCart] = useState([]);
+  // const [cart, setCart] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [sortingOption, setSortingOption] = useState("desc");
-
+  console.log(cart);
   const handleAddToCart = (item) => {
     // Check if the item is already in the cart
     const existingItem = cart.find((cartItem) => cartItem.id === item.id);
@@ -19,7 +19,7 @@ const Shop = () => {
       // If the item is already in the cart, update its quantity
       const updatedCart = cart.map((cartItem) => {
         if (cartItem.id === item.id) {
-          return { ...cartItem, quantity: cartItem.quantity + 1 };
+          return { ...cartItem, quantity: parseInt(cartItem.quantity) + 1 };
         }
         return cartItem;
       });
@@ -34,6 +34,7 @@ const Shop = () => {
         quantity: 1, // Initial quantity
       };
       setCart([...cart, cartItem]);
+      localStorage.setItem("cart", JSON.stringify([...cart, cartItem]));
     }
   };
 
