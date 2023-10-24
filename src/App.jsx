@@ -21,6 +21,7 @@ import Cart from "./pages/cart";
 import Login from "./pages/login";
 import ProductDetail from "./pages/ProductDetail";
 import Success from "./pages/Success";
+import getCartTotal from "./utils";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function AppRoutes() {
   const storedCart = localStorage.getItem("cart");
   const initialCart = storedCart ? JSON.parse(storedCart) : [];
   const [cart, setCart] = useState(initialCart);
+  const [total, setTotal] = useState(0);
 
   const navigate = useNavigate();
 
@@ -109,6 +111,8 @@ function AppRoutes() {
               handleIncreaseQuantity={handleIncreaseQuantity}
               handlePlaceOrder={handlePlaceOrder}
               cart={cart}
+              total={total}
+              getCartTotal={getCartTotal}
             />
           }
         />
