@@ -1,12 +1,6 @@
 import React from "react";
 import "../App.css";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  useNavigate,
-} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../images/Shamazon-Logo.jpg";
 import { BsFillCartFill } from "react-icons/bs";
 import { HiOutlineLogout } from "react-icons/hi";
@@ -16,7 +10,7 @@ const removeToken = () => {
   localStorage.removeItem("userToken");
 };
 
-const header = ({ setToken, cart }) => {
+const header = ({ cart }) => {
   const navigate = useNavigate();
   const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
 

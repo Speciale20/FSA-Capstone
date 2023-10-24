@@ -1,18 +1,5 @@
-// elimentate login req if there is not a token           complete
-// login button on nav bar                                complete
-// make a conformation for purchase button and screen     complete
-// remove +- on Shop on each card                         complete
-// update quanitiy of cart on the nav bar                 complete
-// Cleanup unsued code on each file                       complete
-
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Layout from "./components/layout";
 import Home from "./pages/home";
 import Shop from "./pages/shop";
