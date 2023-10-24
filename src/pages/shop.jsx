@@ -169,27 +169,6 @@ const Shop = ({ cart, setCart }) => {
                     <button onClick={() => handleAddToCart(row)}>
                       Add to Cart
                     </button>
-                    {/* Display quantity and buttons */}
-                    {/* {cart.map((cartItem) => {
-                      if (cartItem.id === row.id) {
-                        return (
-                          <div key={cartItem.id}>
-                            <button
-                              onClick={() => handleIncreaseQuantity(cartItem)}
-                            >
-                              +
-                            </button>
-                            <span>{cartItem.quantity}</span>
-                            <button
-                              onClick={() => handleDecreaseQuantity(cartItem)}
-                            >
-                              -
-                            </button>
-                          </div>
-                        );
-                      }
-                      return null;
-                    })} */}
                   </div>
                 </div>
               </div>
