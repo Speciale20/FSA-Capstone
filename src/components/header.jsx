@@ -10,13 +10,15 @@ import {
 import logo from "../images/Shamazon-Logo.jpg";
 import { BsFillCartFill } from "react-icons/bs";
 import { HiOutlineLogout } from "react-icons/hi";
+import { BiLogIn } from "react-icons/bi";
 
 const removeToken = () => {
   localStorage.removeItem("userToken");
 };
 
-const header = ({ setToken }) => {
+const header = ({ setToken, cart }) => {
   const navigate = useNavigate();
+  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
 
   const handleLogout = () => {
     console.log("logging out...");
@@ -46,13 +48,17 @@ const header = ({ setToken }) => {
               <div className="Link">
                 <Link to={"/about"}>ABOUT</Link>
               </div>
+              <Link to={"/login"}>
+                <span>Login</span>
+                <BiLogIn />
+              </Link>
               <Link onClick={handleLogout}>
                 <HiOutlineLogout />
                 <span>Log Out</span>
               </Link>
               <Link to={"/cart"}>
                 <BsFillCartFill />
-                <span>CART</span>
+                <span>CART ({totalQuantity})</span>
               </Link>
             </div>
           </header>

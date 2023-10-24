@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import ProductDetail from "./ProductDetail";
-import Cart from "./cart";
 
 const Shop = ({ cart, setCart }) => {
   const [search, setSearch] = useState("");
@@ -87,57 +85,59 @@ const Shop = ({ cart, setCart }) => {
       </center>
 
       {/* Category buttons */}
-      <div className="container-cat">
-        <div className="row-cat">
-          <button
-            className={`btn-cat ${
-              selectedCategory === "men's clothing" ? "active" : ""
-            }`}
-            onClick={() => handleCategoryClick("men's clothing")}
-          >
-            Men's
-          </button>
-          <button
-            className={`btn-cat ${
-              selectedCategory === "women's clothing" ? "active" : ""
-            }`}
-            onClick={() => handleCategoryClick("women's clothing")}
-          >
-            Women's
-          </button>
-          <button
-            className={`btn-cat ${
-              selectedCategory === "jewelery" ? "active" : ""
-            }`}
-            onClick={() => handleCategoryClick("jewelery")}
-          >
-            Jewelry
-          </button>
-          <button
-            className={`btn-cat ${
-              selectedCategory === "electronics" ? "active" : ""
-            }`}
-            onClick={() => handleCategoryClick("electronics")}
-          >
-            Electronics
-          </button>
-          <button
-            className={`btn-cat ${selectedCategory === "" ? "active" : ""}`}
-            onClick={() => handleCategoryClick("")}
-          >
-            All Products
-          </button>
+      <center>
+        <div className="container-cat">
+          <div className="row-cat">
+            <button
+              className={`btn-cat ${
+                selectedCategory === "men's clothing" ? "active" : ""
+              }`}
+              onClick={() => handleCategoryClick("men's clothing")}
+            >
+              Men's
+            </button>
+            <button
+              className={`btn-cat ${
+                selectedCategory === "women's clothing" ? "active" : ""
+              }`}
+              onClick={() => handleCategoryClick("women's clothing")}
+            >
+              Women's
+            </button>
+            <button
+              className={`btn-cat ${
+                selectedCategory === "jewelery" ? "active" : ""
+              }`}
+              onClick={() => handleCategoryClick("jewelery")}
+            >
+              Jewelry
+            </button>
+            <button
+              className={`btn-cat ${
+                selectedCategory === "electronics" ? "active" : ""
+              }`}
+              onClick={() => handleCategoryClick("electronics")}
+            >
+              Electronics
+            </button>
+            <button
+              className={`btn-cat ${selectedCategory === "" ? "active" : ""}`}
+              onClick={() => handleCategoryClick("")}
+            >
+              All Products
+            </button>
+          </div>
         </div>
-      </div>
 
-      {/* Sorting dropdown */}
-      <div className="container-sort">
-        <select value={sortingOption} onChange={handleSortingChange}>
-          <option value="">Default</option>
-          <option value="desc">Sort by Price (High to Low)</option>
-          <option value="asc">Sort by Price (Low to High)</option>
-        </select>
-      </div>
+        {/* Sorting dropdown */}
+        <div className="container-sort">
+          <select value={sortingOption} onChange={handleSortingChange}>
+            <option value="">Default</option>
+            <option value="desc">Sort by Price (High to Low)</option>
+            <option value="asc">Sort by Price (Low to High)</option>
+          </select>
+        </div>
+      </center>
 
       <div className="container-shop">
         {data
@@ -170,7 +170,7 @@ const Shop = ({ cart, setCart }) => {
                       Add to Cart
                     </button>
                     {/* Display quantity and buttons */}
-                    {cart.map((cartItem) => {
+                    {/* {cart.map((cartItem) => {
                       if (cartItem.id === row.id) {
                         return (
                           <div key={cartItem.id}>
@@ -189,7 +189,7 @@ const Shop = ({ cart, setCart }) => {
                         );
                       }
                       return null;
-                    })}
+                    })} */}
                   </div>
                 </div>
               </div>

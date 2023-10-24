@@ -1,9 +1,9 @@
-// elimentate login req if there is not a token
-// login button on nav bar
-// make a conformation for purchase button and screen
-// remove +- on Shop on each card
-// update quanitiy of cart on the nav bar
-// Cleanup unsued code on each file
+// elimentate login req if there is not a token           complete
+// login button on nav bar                                complete
+// make a conformation for purchase button and screen     complete
+// remove +- on Shop on each card                         complete
+// update quanitiy of cart on the nav bar                 complete
+// Cleanup unsued code on each file                       complete
 
 import React, { useState, useEffect } from "react";
 import {
@@ -20,6 +20,7 @@ import About from "./pages/about";
 import Cart from "./pages/cart";
 import Login from "./pages/login";
 import ProductDetail from "./pages/ProductDetail";
+import Success from "./pages/Success";
 
 function App() {
   return (
@@ -53,6 +54,15 @@ function AppRoutes() {
     console.log("After navigating");
   };
 
+  const handlePlaceOrder = () => {
+    localStorage.removeItem("cart");
+    console.log("Cart cleared from local storage");
+    setCart([]);
+    console.log("Cart state cleared");
+
+    navigate("/Success");
+  };
+
   const handleIncreaseQuantity = (item) => {
     // Find the item in the cart
     const updatedCart = cart.map((cartItem) => {
@@ -83,7 +93,10 @@ function AppRoutes() {
   };
   return (
     <Routes>
-      <Route path="/" element={<Layout handleLogout={handleLogout} />}>
+      <Route
+        path="/"
+        element={<Layout handleLogout={handleLogout} cart={cart} />}
+      >
         <Route index element={<Home />} />
         <Route path="shop" element={<Shop cart={cart} setCart={setCart} />} />
         <Route path="about" element={<About />} />
@@ -91,19 +104,17 @@ function AppRoutes() {
         <Route
           path="cart"
           element={
-            token ? (
-              <Cart
-                handleDecreaseQuantity={handleDecreaseQuantity}
-                handleIncreaseQuantity={handleIncreaseQuantity}
-                cart={cart}
-              />
-            ) : (
-              <Navigate to="/login" />
-            )
+            <Cart
+              handleDecreaseQuantity={handleDecreaseQuantity}
+              handleIncreaseQuantity={handleIncreaseQuantity}
+              handlePlaceOrder={handlePlaceOrder}
+              cart={cart}
+            />
           }
         />
         <Route path="login" element={<Login setToken={setToken} />} />
         <Route path="shop/products/:id" element={<ProductDetail />} />
+        <Route path="Success" element={<Success />} />
         {/* <Route path="*" element={<Navigate to="/" />} /> */}
       </Route>
     </Routes>
